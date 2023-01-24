@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 const drawerWidth = 240;
 
 function Navbar(props) {
+  const currentUser = true;
   const navigate = useNavigate()
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -35,12 +36,30 @@ function Navbar(props) {
 
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: 'center', flexDirection: "column" }}>
-            <Button onClick={() => navigate("/login")}>
-              Login
-            </Button>
-            <Button onClick={() => navigate("/register")}>
-              Register
-            </Button>
+
+            {currentUser ? (
+              <>
+                <Button onClick={() => navigate("/profile")}>
+                  Profile
+                </Button>
+                <Button onClick={() => navigate("/newblog")}>
+                  New Blog
+                </Button>
+                <Button onClick={null}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={() => navigate("/login")}>
+                  Login
+                </Button>
+                <Button onClick={() => navigate("/register")}>
+                  Register
+                </Button>
+              </>
+            )}
+
           </ListItemButton>
         </ListItem>
 
@@ -71,13 +90,29 @@ function Navbar(props) {
           >
             MUI
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Button sx={{ color: '#fff' }} onClick={() => navigate("/login")}>
-              Login
-            </Button>
-            <Button sx={{ color: '#fff' }} onClick={() => navigate("/register")}>
-              Register
-            </Button>
+          <Box sx={{ display: { xs: 'none', sm: 'block' }, color:"#000" }}>
+            {currentUser ? (
+              <>
+                <Button sx={{ color:"#fff" }} onClick={() => navigate("/profile")}>
+                  Profile
+                </Button>
+                <Button sx={{ color:"#fff" }} onClick={() => navigate("/newblog")}>
+                  New
+                </Button>
+                <Button sx={{ color:"#fff" }} onClick={null}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button sx={{ color:"#fff" }} onClick={() => navigate("/login")}>
+                  Login
+                </Button>
+                <Button sx={{ color:"#fff" }} onClick={() => navigate("/register")}>
+                  Register
+                </Button>
+              </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
