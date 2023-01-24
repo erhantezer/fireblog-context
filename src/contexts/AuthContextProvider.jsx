@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
-const AuthContextProvider = () => {
+
+const AuthContext = createContext();
+
+//! custom hook 
+export const useAuth = () => {
+  return useContext(AuthContext)
+}
+
+
+const AuthContextProvider = ({children}) => {
+const [currentUser, setCurrentUser] = useState()
+const [loading, setLoading] = useState(false)
+
+
+
+
   return (
-    <div>AuthContextProvider</div>
+    <AuthContext.Provider value={null}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 
