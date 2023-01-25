@@ -12,7 +12,7 @@ export const useAuth = () => {
 
 
 const AuthContextProvider = ({children}) => {
-const [currentUser, setCurrentUser] = useState()
+const [currentUser, setCurrentUser] = useState(false)
 
 
   return (

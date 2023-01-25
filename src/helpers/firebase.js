@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,7 +25,7 @@ export const createUser =  async (email, password, navigate, displayName) => {
     navigate("/");
 
 //! Bir kullanıcının profilini güncelleme Bir kullanıcının temel profil bilgilerini
-//!  (kullanıcının görünen adı ve profil fotoğrafı URL'si) updateProfile yöntemiyle güncelleyebilirsiniz.
+//!  (kullanıcının görünen adı ve profil fotoğrafı URL'si) updateProfile yöntemiyle güncelleyebilirsiniz. güncel verileri firebase kayıt için
     await updateProfile(auth.currentUser, {
       displayName: displayName,
     })
@@ -45,4 +45,18 @@ export const login = async (email, password, navigate) => {
     } catch (error) {
       console.log(error)
     }
+};
+
+
+//! kullanıcının signin olup olmadığına bakıp yeni kullanıcı bilgilerini dönen yapı
+export const userObserver = (setCurrentUser) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const { email, displayName, photoURL } = user;
+      setCurrentUser({ email, displayName, photoURL })
+    } else {
+      setCurrentUser(false)
+      alert("user yok")
+    }
+  })
 }
