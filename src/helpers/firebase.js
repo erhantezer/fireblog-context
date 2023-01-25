@@ -24,6 +24,8 @@ export const createUser =  async (email, password, navigate, displayName) => {
     await createUserWithEmailAndPassword(auth, email, password);
     navigate("/");
 
+//! Bir kullanıcının profilini güncelleme Bir kullanıcının temel profil bilgilerini
+//!  (kullanıcının görünen adı ve profil fotoğrafı URL'si) updateProfile yöntemiyle güncelleyebilirsiniz.
     await updateProfile(auth.currentUser, {
       displayName: displayName,
     })
@@ -35,10 +37,12 @@ export const createUser =  async (email, password, navigate, displayName) => {
 };
 
 
-export const login = async (email, password) => {
+//! login
+export const login = async (email, password, navigate) => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
+      navigate("/")
     } catch (error) {
-      
+      console.log(error)
     }
 }
