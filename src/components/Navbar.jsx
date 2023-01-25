@@ -13,11 +13,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContextProvider';
 
 const drawerWidth = 240;
 
 function Navbar(props) {
-  const currentUser = true;
+  const {currentUser} = useAuth()
   const navigate = useNavigate()
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
