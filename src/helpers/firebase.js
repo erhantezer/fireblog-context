@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,13 +19,14 @@ export const auth = getAuth(app);
 
 
 //! register
-export const createUser =  async (email, password, navigate, displayName) => {
+export const createUser = async (email, password, navigate, displayName) => {
+  
   try {
     await createUserWithEmailAndPassword(auth, email, password);
     navigate("/");
 
-//! Bir kullanıcının profilini güncelleme Bir kullanıcının temel profil bilgilerini
-//!  (kullanıcının görünen adı ve profil fotoğrafı URL'si) updateProfile yöntemiyle güncelleyebilirsiniz. güncel verileri firebase kayıt için
+    //! Bir kullanıcının profilini güncelleme Bir kullanıcının temel profil bilgilerini
+    //!  (kullanıcının görünen adı ve profil fotoğrafı URL'si) updateProfile yöntemiyle güncelleyebilirsiniz. güncel verileri firebase kayıt için
     await updateProfile(auth.currentUser, {
       displayName: displayName,
     })
@@ -39,17 +40,19 @@ export const createUser =  async (email, password, navigate, displayName) => {
 
 //! login
 export const login = async (email, password, navigate) => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password)
-      navigate("/")
-    } catch (error) {
-      console.log(error)
-    }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password)
+    navigate("/")
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 
 //! kullanıcının signin olup olmadığına bakıp yeni kullanıcı bilgilerini dönen yapı
 export const userObserver = (setCurrentUser) => {
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const { email, displayName, photoURL } = user;
@@ -59,4 +62,38 @@ export const userObserver = (setCurrentUser) => {
       alert("user yok")
     }
   })
+};
+
+
+//! Logout çıkış yapılıp veriler boşaltılır bakınız yukarıdaki else girer ve setleyip currentuser false kurarız
+export const logOut = () => {
+
+  signOut(auth);
+  alert("logout başarılı")
+};
+
+
+
+//! google ile giriş için
+export const signInWithGoogle = (navigate) => {
+
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      navigate("/")
+      alert("google ile giriş yapıldı")
+    }).catch((error) => console.log(error))
+};
+
+
+
+//! pasaport unutulunca 
+export const forgotPassword = (email) => {
+
+  sendPasswordResetEmail(auth,email)
+  .then(() => {
+    alert("eposta kutunuzu kontrol edin")
+  }).catch(() => {
+    alert("eposta gönderilmede sıkıntı var")
+  });
 }
