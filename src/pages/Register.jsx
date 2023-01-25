@@ -18,19 +18,18 @@ import { useNavigate } from 'react-router-dom';
 const theme = createTheme();
 
 export default function Register() {
-  const [change, setChange] = React.useState()
+ 
 const navigate = useNavigate()
-const {createUser} = useAuth()
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const {firstName,lastName, email, pasword} = change
-    createUser({firstName,lastName, email, pasword,navigate})
+   
   }
 
-  const handleChange = (e) => {
-    setChange({...change, [e.target.id] : e.target.value})
-  }
+  // const handleChange = (e) => {
+  //   setChange({...change, [e.target.id] : e.target.value})
+  // }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
