@@ -124,3 +124,7 @@ export const addBlog = (blogValue) => {
   set(newUserRef, blogValue)
 };
 
+export const getOneBlog = (currentUser, id) => {
+  const result = currentUser?.filter((item) => item.id === id);
+  return result;
+}
