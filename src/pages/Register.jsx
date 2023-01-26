@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,25 +10,35 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useAuth } from '../contexts/AuthContextProvider';
 import { useNavigate } from 'react-router-dom';
+import { createUser } from '../helpers/firebase';
+import { useState } from 'react';
 
 
 
 const theme = createTheme();
 
 export default function Register() {
-
   const navigate = useNavigate()
+  const [input, setInput] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  })
+
+
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    const { firstName, lastName, email, password} = input
+    const displayName = `${firstName} ${lastName}`;
+    createUser(email, password, displayName, navigate)
   }
 
   const handleChange = (e) => {
-    ({..., [e.target.id] : e.target.value})
+    setInput({ ...input, [e.target.id]: e.target.value })
   }
   return (
     <ThemeProvider theme={theme}>
@@ -59,6 +69,7 @@ export default function Register() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={input.firstName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -70,6 +81,7 @@ export default function Register() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={input.lastName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -81,6 +93,7 @@ export default function Register() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={input.email}
                   onChange={handleChange}
                 />
               </Grid>
@@ -93,6 +106,7 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={input.password}
                   onChange={handleChange}
                 />
               </Grid>

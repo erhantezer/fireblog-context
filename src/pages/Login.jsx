@@ -12,18 +12,30 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { forgotPassword, login } from '../helpers/firebase';
 
 
 
 const theme = createTheme();
 
 export default function Login() {
+  const [input, setInput] = React.useState({
+    email: "",
+    password: "",
+  })
  
  
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+    const {email, password} = input
+    login(email, password)
   };
+
+const handleChange = (e) => {
+  setInput({...input, [e.target.id] : e.target.value})
+}
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -52,7 +64,9 @@ export default function Login() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              value={input.email}
               autoFocus
+              onChange={handleChange}
             />
             <TextField
               margin="normal"
@@ -63,6 +77,8 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={input.password}
+              onChange={handleChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -78,7 +94,7 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" onClick={() => forgotPassword(input.email)}>
                   Forgot password?
                 </Link>
               </Grid>
