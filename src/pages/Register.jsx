@@ -11,9 +11,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { createUser } from '../helpers/firebase';
+import { createUser,signInWithGoogle } from '../helpers/firebase';
 import { useState } from 'react';
-
+import GoogleIcon from "../assets/icons/GoogleIcon";
 
 
 const theme = createTheme();
@@ -32,7 +32,7 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { firstName, lastName, email, password} = input
+    const { firstName, lastName, email, password} = input;
     const displayName = `${firstName} ${lastName}`;
     createUser(email, password, displayName, navigate)
   }
@@ -40,6 +40,12 @@ export default function Register() {
   const handleChange = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value })
   }
+
+
+  const handleWithGoogle = () => {
+    signInWithGoogle(navigate)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -118,6 +124,15 @@ export default function Register() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleWithGoogle}
+            >
+              <GoogleIcon color="currentColor" />
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
