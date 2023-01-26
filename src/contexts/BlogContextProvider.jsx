@@ -1,4 +1,5 @@
-import React, { Children, createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { readBlogs } from '../helpers/firebase';
 
 const BlogContext = createContext();
 
@@ -11,7 +12,7 @@ const [currentBlogs, setCurrentBlogs] = useState()
 
 
 useEffect(() => {
-
+  readBlogs(setCurrentBlogs)
 }, [])
 
   return (

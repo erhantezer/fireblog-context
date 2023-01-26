@@ -1,16 +1,16 @@
 import { initializeApp } from "firebase/app";
-import { 
-  createUserWithEmailAndPassword, 
+import {
+  createUserWithEmailAndPassword,
   getAuth, GoogleAuthProvider,
-  onAuthStateChanged, 
-  sendPasswordResetEmail, 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
-  signOut, 
-  updateProfile 
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile
 
 } from "firebase/auth";
-import { getDatabase, push, ref, set } from "firebase/database";
+import { getDatabase, onValue, push, query, ref, remove, set, update } from "firebase/database";
 
 //! ************************ AUTH *****************************
 // TODO: Add SDKs for Firebase products that you want to use
@@ -104,12 +104,12 @@ export const signInWithGoogle = (navigate) => {
 //! pasaport unutulunca 
 export const forgotPassword = (email) => {
 
-  sendPasswordResetEmail(auth,email)
-  .then(() => {
-    alert("eposta kutunuzu kontrol edin")
-  }).catch(() => {
-    alert("eposta gönderilmede sıkıntı var")
-  });
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      alert("eposta kutunuzu kontrol edin")
+    }).catch(() => {
+      alert("eposta gönderilmede sıkıntı var")
+    });
 }
 
 
@@ -119,12 +119,52 @@ export const forgotPassword = (email) => {
 //* Verileri database eklemek için yazılan firebase methodu ve onun fonksiyonu
 export const addBlog = (blogValue) => {
   const db = getDatabase();
-  const userRef = ref(db,"blogs");
+  const userRef = ref(db, "blogs");
   const newUserRef = push(userRef);
   set(newUserRef, blogValue)
 };
 
-export const getOneBlog = (currentUser, id) => {
-  const result = currentUser?.filter((item) => item.id === id);
+
+//* silme işlemi yapılır
+export const deleteOneBlog = (id) => {
+  const db = getDatabase();
+  remove(ref(db, "blogs/" + id));
+};
+
+
+
+//* güncelleme fonksiyonu
+export const updateBlog = (id, data) => {
+  const db = getDatabase();
+  const updates = {};
+  updates["blogs/" + id] = data;
+  update(ref(db), updates) //return kullanılacak 
+};
+
+
+
+//* verileri database ten okuma işlemi
+export const readBlogs = (setCurrentBlogs) => {
+  const db = getDatabase();
+  const blogRef = ref(db, "blogs");
+  onValue(query(blogRef), snapshot => {
+    const blogs = snapshot.val();
+    const blogL = [];
+    for (let id in blogs) {
+      blogL.push({ id, ...blogs[id] });
+    }
+    setCurrentBlogs(blogL)
+  })
+}
+
+
+
+
+
+
+
+
+export const getOneBlog = (currentBlogs, id) => {
+  const result = currentBlogs?.filter((item) => item.id === id);
   return result;
 }
