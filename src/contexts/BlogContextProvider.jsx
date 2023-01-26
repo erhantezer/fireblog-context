@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { Children, createContext, useContext, useEffect, useState } from 'react'
 
-const BlogContextProvider = () => {
+const BlogContext = createContext();
+
+export const useBlogContext = () => {
+  return useContext(BlogContext)
+}
+
+const BlogContextProvider = ({children}) => {
+const [currentBlogs, setCurrentBlogs] = useState()
+
+
+useEffect(() => {
+
+}, [])
+
   return (
-    <div>BlogContextProvider</div>
+    <BlogContext.Provider value={{currentBlogs}}>
+      {children}
+    </BlogContext.Provider>
   )
 }
 

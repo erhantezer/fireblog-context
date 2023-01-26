@@ -18,18 +18,18 @@ import { useNavigate } from 'react-router-dom';
 const theme = createTheme();
 
 export default function Register() {
- 
-const navigate = useNavigate()
+
+  const navigate = useNavigate()
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-   
+
   }
 
-  // const handleChange = (e) => {
-  //   setChange({...change, [e.target.id] : e.target.value})
-  // }
+  const handleChange = (e) => {
+    ({..., [e.target.id] : e.target.value})
+  }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -114,7 +114,7 @@ const navigate = useNavigate()
             </Grid>
           </Box>
         </Box>
-        
+
       </Container>
     </ThemeProvider>
   );

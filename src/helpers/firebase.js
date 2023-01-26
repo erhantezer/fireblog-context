@@ -1,5 +1,18 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { 
+  createUserWithEmailAndPassword, 
+  getAuth, GoogleAuthProvider,
+  onAuthStateChanged, 
+  sendPasswordResetEmail, 
+  signInWithEmailAndPassword, 
+  signInWithPopup, 
+  signOut, 
+  updateProfile 
+
+} from "firebase/auth";
+import { getDatabase, push, ref, set } from "firebase/database";
+
+//! ************************ AUTH *****************************
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,12 +28,13 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+const db = getDatabase(app); //! for blogs
 
 
 //! register
 export const createUser = async (email, password, navigate, displayName) => {
-  
+
   try {
     await createUserWithEmailAndPassword(auth, email, password);
     navigate("/");
@@ -97,3 +111,16 @@ export const forgotPassword = (email) => {
     alert("eposta gönderilmede sıkıntı var")
   });
 }
+
+
+
+//! ******************** BLOGS ****************************
+
+//* Verileri database eklemek için yazılan firebase methodu ve onun fonksiyonu
+export const addBlog = (blogValue) => {
+  const db = getDatabase();
+  const userRef = ref(db,"blogs");
+  const newUserRef = push(userRef);
+  set(newUserRef, blogValue)
+};
+
