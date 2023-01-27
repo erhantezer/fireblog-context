@@ -37,12 +37,14 @@ export default function Register() {
     createUser(email, password, displayName, navigate)
   }
 
+  
   const handleChange = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value })
   }
 
 
   const handleWithGoogle = () => {
+
     signInWithGoogle(navigate)
   }
 
