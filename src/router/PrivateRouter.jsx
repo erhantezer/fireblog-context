@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContextProvider'
 const PrivateRouter = () => {
   const {currentUser} = useAuth()
   return (
-    currentUser ? <Outlet/> : <Navigate to="/" replace/>
+    currentUser ? <Outlet/> : <Navigate to="/login" replace/>
   )
 }
 

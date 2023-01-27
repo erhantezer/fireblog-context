@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContextProvider';
+import { logOut } from '../helpers/firebase';
 
 const drawerWidth = 240;
 
@@ -46,7 +47,7 @@ function Navbar(props) {
                 <Button onClick={() => navigate("/newblog")}>
                   New Blog
                 </Button>
-                <Button onClick={null}>
+                <Button onClick={() => logOut()}>
                   Logout
                 </Button>
               </>
@@ -100,7 +101,7 @@ function Navbar(props) {
                 <Button sx={{ color:"#fff" }} onClick={() => navigate("/newblog")}>
                   New
                 </Button>
-                <Button sx={{ color:"#fff" }} onClick={null}>
+                <Button sx={{ color:"#fff" }} onClick={() => logOut()}>
                   Logout
                 </Button>
               </>

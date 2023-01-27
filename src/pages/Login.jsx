@@ -13,12 +13,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { forgotPassword, login } from '../helpers/firebase';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const theme = createTheme();
 
 export default function Login() {
+const navigate = useNavigate()
+
   const [input, setInput] = React.useState({
     email: "",
     password: "",
@@ -28,7 +31,7 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const {email, password} = input
-    login(email, password)
+    login(email, password, navigate)
   };
 
 const handleChange = (e) => {
