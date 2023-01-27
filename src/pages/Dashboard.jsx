@@ -1,5 +1,5 @@
 import BlogCard from "../components/BlogCard";
-import { useBlogContext } from "../contexts/BlogContext";
+import { useBlogContext } from "../contexts/BlogContextProvider";
 
 import loadingGif from "../assets/loading.gif";
 import { makeStyles } from "@mui/styles";

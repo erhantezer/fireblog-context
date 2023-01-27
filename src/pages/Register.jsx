@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { createUser,signInWithGoogle } from '../helpers/firebase';
 import { useState } from 'react';
-import GoogleIcon from "../assets/icons/GoogleIcon";
+import GoogleIcon from "../assets/GoogleIcon";
 
 
 const theme = createTheme();
@@ -34,10 +34,10 @@ export default function Register() {
     event.preventDefault();
     const { firstName, lastName, email, password} = input;
     const displayName = `${firstName} ${lastName}`;
-    createUser(email, password, displayName, navigate)
+    createUser(email, password, navigate, displayName) //! bu sırayla gönderdiysek firebase te aynı sırayla almamız gerek
   }
 
-  
+
   const handleChange = (e) => {
     setInput({ ...input, [e.target.id]: e.target.value })
   }
