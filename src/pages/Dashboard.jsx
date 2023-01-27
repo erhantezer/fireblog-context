@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
   const classes = useStyles();
   const {currentBlogs} = useBlogContext()
+  console.log(currentBlogs);
 
   return (
     <div className={classes.mainRoot}>
@@ -41,17 +42,13 @@ const Dashboard = () => {
           spacing={5}
           justifyContent="center"
         >
-          {currentBlogs === undefined ? (
-            <img src={loadingGif} alt="loading" />
-          ) : currentBlogs ? (
-            currentBlogs?.map((item, id) => (
+          {currentBlogs?.map((item, id) => (
               <Grid key={id} item>
                 <BlogCard {...item} />
               </Grid>
-            ))
-          ) : (
-            <h3>No data available.</h3>
-          )}
+            ))}
+           
+          
         </Grid>
       </>
     </div>
