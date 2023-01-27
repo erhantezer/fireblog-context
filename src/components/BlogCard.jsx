@@ -6,13 +6,24 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function BlogCard() {
+export default function BlogCard({
+  id,
+  author,
+  content,
+  get_comment_count,
+  get_like_count,
+  image,
+  published_date,
+  title,
+}) {
+
+
   return (
     <Card sx={{ maxWidth: 345 }} elevation={10}>
       <CardMedia
         sx={{ height: 140 }}
         image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
+        title={title}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

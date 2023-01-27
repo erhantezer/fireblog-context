@@ -46,7 +46,7 @@ const Dashboard = () => {
           ) : currentBlogs ? (
             currentBlogs?.map((item, id) => (
               <Grid key={id} item>
-                <BlogCard post={item} />
+                <BlogCard {...item} />
               </Grid>
             ))
           ) : (
