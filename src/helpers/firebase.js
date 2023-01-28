@@ -162,9 +162,6 @@ export const readBlogs = (setCurrentBlogs) => {
 
 
 
-
-
-
 export const getOneBlog = (currentBlogs, id) => {
   const result = currentBlogs?.filter((item) => item.id === id);
   return result;
