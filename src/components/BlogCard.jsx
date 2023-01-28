@@ -1,9 +1,7 @@
-import React from "react";
-
 import { useNavigate } from "react-router-dom";
 import placeholder from "../assets/placeholder.png";
 import moment from "moment";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContextProvider";
 import { toastErrorNotify } from "../helpers/toastify";
 import { makeStyles } from "@mui/styles";
 import {
