@@ -16,7 +16,7 @@ export default function BlogCard({
   published_date,
   title,
 }) {
-
+console.log(title)
 
   return (
     <Card sx={{ maxWidth: 345 }} elevation={10}>

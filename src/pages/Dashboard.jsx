@@ -1,6 +1,5 @@
 import BlogCard from "../components/BlogCard";
 import { useBlogContext } from "../contexts/BlogContextProvider";
-
 import loadingGif from "../assets/loading.gif";
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography } from "@mui/material";
@@ -44,9 +43,9 @@ const Dashboard = () => {
           {currentBlogs === undefined ? (
             <img src={loadingGif} alt="loading" />
           ) : 
-          currentBlogs ? (currentBlogs?.map((item, id) => (
-              <Grid key={id} item>
-                <BlogCard {...item} />
+          currentBlogs ? (currentBlogs?.map((blog, id) => (
+              <Grid item key={id} >
+                <BlogCard {...blog} />
               </Grid>
             ))
           ) : (
