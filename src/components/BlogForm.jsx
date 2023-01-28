@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Container,
   CssBaseline,
@@ -10,27 +9,21 @@ import {
 import { makeStyles } from "@mui/styles";
 import React from "react";
 
-import blogPng from "../assets/blok.png";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: 4,
+    
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    padding: 13,
-    height: 200,
-    width: 200,
-    backgroundColor: "#046582",
-  },
+
   blogImg: {
     width: 200,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: 3,
+    
   },
   submit: {
     marginTop: 5,
@@ -55,9 +48,7 @@ console.log(newBlog);
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <img src={blogPng} alt="blog" className={classes.blogImg} />
-        </Avatar>
+
         <Typography component="h1" variant="h5" className={classes.title}>
           ── New Blog ──
         </Typography>

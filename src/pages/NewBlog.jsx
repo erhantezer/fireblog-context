@@ -32,7 +32,7 @@ const newBlogSubmit = (e) => {
 
 
   return (
-    <div style={{ marginTop: 90 }}>
+    <div style={{ marginTop: 40 }}>
       <BlogForm
         newBlog={newBlog}
         setNewBlog={setNewBlog}
