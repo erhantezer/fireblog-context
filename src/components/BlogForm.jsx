@@ -46,8 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BlogForm({ newBlog, setNewBlog, newBlogHandler }) {
+export default function BlogForm({ newBlog, setNewBlog, newBlogSubmit }) {
   const classes = useStyles();
+console.log(newBlog);
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -113,7 +115,7 @@ export default function BlogForm({ newBlog, setNewBlog, newBlogHandler }) {
             fullWidth
             variant="contained"
             className={classes.submit}
-            onClick={newBlogHandler}
+            onClick={newBlogSubmit}
           >
             Submit
           </Button>
