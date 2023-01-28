@@ -43,9 +43,9 @@ const Dashboard = () => {
           {currentBlogs === undefined ? (
             <img src={loadingGif} alt="loading" />
           ) : 
-          currentBlogs ? (currentBlogs?.map((blog, id) => (
+          currentBlogs ? (currentBlogs?.map((item, id) => (
               <Grid item key={id} >
-                <BlogCard {...blog} />
+                <BlogCard post={item} />
               </Grid>
             ))
           ) : (

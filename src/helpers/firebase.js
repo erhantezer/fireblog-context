@@ -11,6 +11,7 @@ import {
 
 } from "firebase/auth";
 import { getDatabase, onValue, push, query, ref, remove, set, update } from "firebase/database";
+import { toastErrorNotify, toastSuccessNotify, toastWarnNotify } from "./toastify";
 
 //! ************************ AUTH *****************************
 // TODO: Add SDKs for Firebase products that you want to use
@@ -20,6 +21,7 @@ import { getDatabase, onValue, push, query, ref, remove, set, update } from "fir
 const firebaseConfig = {
   apiKey: "AIzaSyA8hYHW3BXxdOP815YQki5FofO2RRBX5b0",
   authDomain: "fir-blog-2ca7a.firebaseapp.com",
+  databaseURL: "https://fir-blog-2ca7a-default-rtdb.firebaseio.com",
   projectId: "fir-blog-2ca7a",
   storageBucket: "fir-blog-2ca7a.appspot.com",
   messagingSenderId: "1004796587658",
@@ -45,7 +47,7 @@ export const createUser = async (email, password, navigate, displayName) => {
       displayName: displayName,
     })
 
-    alert("kayıt başarılı")
+    toastSuccessNotify("Register successed")
   } catch (error) {
     console.log(error);
   }
@@ -73,7 +75,6 @@ export const userObserver = (setCurrentUser) => {
       setCurrentUser({ email, displayName, photoURL })
     } else {
       setCurrentUser(false)
-      alert("user yok")
     }
   })
 };
@@ -83,7 +84,7 @@ export const userObserver = (setCurrentUser) => {
 export const logOut = () => {
 
   signOut(auth);
-  alert("logout başarılı")
+  toastSuccessNotify("logout successed")
 };
 
 
@@ -95,7 +96,7 @@ export const signInWithGoogle = (navigate) => {
   signInWithPopup(auth, provider)
     .then((result) => {
       navigate("/")
-      alert("google ile giriş yapıldı")
+      toastWarnNotify("Login with google")
     }).catch((error) => console.log(error))
 };
 
@@ -106,9 +107,9 @@ export const forgotPassword = (email) => {
 
   sendPasswordResetEmail(auth, email)
     .then(() => {
-      alert("eposta kutunuzu kontrol edin")
+      toastWarnNotify("Go to email")
     }).catch(() => {
-      alert("eposta gönderilmede sıkıntı var")
+      toastErrorNotify("Error failed")
     });
 }
 
