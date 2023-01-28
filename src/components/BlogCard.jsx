@@ -50,6 +50,7 @@ const useStyles = makeStyles({
 });
 
 export default function BlogCard({ post }) {
+  
   const [like, setLike] = useState(0)
   const {
     id,
