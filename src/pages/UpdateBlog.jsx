@@ -8,7 +8,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
+import { useAuth } from "../contexts/AuthContextProvider";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { getOneBlog, updateBlog } from "../helpers/firebase";
+import { toastSuccessNotify } from "../helpers/toastify";
+import placeholderPng from "../assets/placeholder.png";
+import { useBlogContext } from "../contexts/BlogContextProvider";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,9 +49,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UpdateBlog() {
+  const {currentBlogs} = useBlogContext()
   const classes = useStyles();
- 
+  const {currentUser} = useAuth();
+  const navigate = useNavigate();
+  const [newBlog, setNewBlog] = useState({
+    author: currentUser.email,
+    title: "",
+    content: "",
+    image: "",
+    updated_date: Date.now(),
+  });
+  const {id} = useParams();
 
+  const result = getOneBlog(currentBlogs,id);
+  const res = useMemo(() => {
+    return result ? result[0] : {title: "", content: "", image: ""}
+  }, [result]);
+
+console.log(result[0])
+console.log(res);
+
+  useEffect(() => {
+    setNewBlog(res)
+  },[res]);
+
+
+  const updateBlogHandler = (e) => {
+    e.preventDefault();
+    updateBlog(res?.id, newBlog);
+    navigate(`/detail/${res?.id}`);
+    toastSuccessNotify("Updated successfully!")
+  };
 
 
   return (
@@ -53,7 +88,7 @@ export default function UpdateBlog() {
       <CssBaseline />
       <div className={classes.paper}>
         <img
-          src={null}
+          src={res?.image || placeholderPng}
           alt="blog"
           className={classes.blogImg}
         />
@@ -70,10 +105,12 @@ export default function UpdateBlog() {
                 id="title"
                 label="Title"
                 name="title"
-                
+                defaultValue={res?.title}
                 // value={newBlog?.title || res?.title}
                 autoFocus
-              
+                onChange={(e) =>
+                  setNewBlog({ ...newBlog, title: e.target.value })
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -83,11 +120,13 @@ export default function UpdateBlog() {
                 fullWidth
                 name="image"
                 label="Image URL"
-                
+                defaultValue={res?.image}
                 type="text"
                 id="image"
                 // value={newBlog?.image || res?.image}
-                
+                onChange={(e) =>
+                  setNewBlog({ ...newBlog, image: e.target.value })
+                }
               />
             </Grid>
             <Grid item xs={12}>
@@ -96,12 +135,14 @@ export default function UpdateBlog() {
                 required
                 label="Content"
                 multiline
-                
+                defaultValue={res?.content}
                 // value={newBlog?.content || res?.content}
                 fullWidth
                 rows={15}
                 variant="outlined"
-
+                onChange={(e) =>
+                  setNewBlog({ ...newBlog, content: e.target.value })
+                }
               />
             </Grid>
           </Grid>
@@ -110,7 +151,7 @@ export default function UpdateBlog() {
             fullWidth
             variant="contained"
             className={classes.submit}
-            
+            onClick={updateBlogHandler}
           >
             Update
           </Button>

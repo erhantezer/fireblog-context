@@ -88,6 +88,8 @@ export default function Details() {
     navigate(`/update-blog/${id}`);
   };
 
+
+
   return (
     <div className={classes.root}>
       <Typography className={classes.title} variant="h3" noWrap>

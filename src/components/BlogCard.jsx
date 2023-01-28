@@ -48,7 +48,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard({ post }) {
+export default function BlogCard({ post }) {
   const {
     id,
     author,
@@ -62,6 +62,8 @@ export default function MediaCard({ post }) {
   const classes = useStyles();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  
+
 
   const openDetails = () => {
     if (!currentUser) {
