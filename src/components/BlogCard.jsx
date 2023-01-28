@@ -56,7 +56,7 @@ export default function BlogCard({ post }) {
     author,
     content,
     get_comment_count,
-    get_like_count,
+    // get_like_count,
     image,
     published_date,
     title,
