@@ -16,6 +16,7 @@ import {
 import { AccountCircle } from "@mui/icons-material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import { useState } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles({
 });
 
 export default function BlogCard({ post }) {
+  const [like, setLike] = useState(0)
   const {
     id,
     author,
@@ -63,8 +65,14 @@ export default function BlogCard({ post }) {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   
-
-
+const countToggle = () => {
+  if(like > 0) {
+    setLike(like - 1)
+  }else {
+    setLike(like + 1)
+  }
+}
+ 
   const openDetails = () => {
     if (!currentUser) {
       toastErrorNotify("Login for detials of blog!");
@@ -102,11 +110,11 @@ export default function BlogCard({ post }) {
         </Typography>
       </CardActions>
       <CardActions>
-        <IconButton aria-label="add to favorites" className={classes.image}>
-          <FavoriteIcon color={get_like_count > 0 ? "error" : "disabled"} />
+        <IconButton aria-label="add to favorites" className={classes.image} onClick={countToggle}>
+          <FavoriteIcon color={like> 0 ? "error" : "disabled"} />
         </IconButton>
-        <Typography variant="body2" color="textSecondary">
-          {get_like_count}
+        <Typography variant="body2" color="textSecondary" >
+          {like} {like > 1 ? "Likes" : "Like"}
         </Typography>
         <IconButton aria-label="comment count" className={classes.image}>
           <ChatBubbleOutlineIcon />
