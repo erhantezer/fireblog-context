@@ -30,7 +30,7 @@ function Navbar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2 }} onClick={() => navigate("/")}>
         MUI
       </Typography>
       <Divider />
@@ -85,13 +85,20 @@ function Navbar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
+          <Button
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{color:"white", flexGrow: 1, display: { xs: 'none', sm: 'block' },textAlign:"center",fontSize:"18px" }}
+            onClick={() => navigate("/")}
           >
-            MUI
-          </Typography>
+            Blog App
+          </Button>
+          <Button
+            component="div"
+            sx={{color:"coral", flexGrow: 5, display: { xs: 'none', sm: 'block' }, textAlign:"center",fontWeight:"bolder",fontSize:"20px" }}
+            onClick={() => navigate("/")}
+          >
+            {"<Created By E.T/>"}
+          </Button>
           <Box sx={{ display: { xs: 'none', sm: 'block' }, color:"#000" }}>
             {currentUser ? (
               <>
